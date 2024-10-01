@@ -16,6 +16,7 @@ We will use publicly available datasets, including:
     - [OPERATING BUDGET](https://data.boston.gov/dataset/operating-budget/resource/8f2971f0-7a0d-401d-8376-0289e3b810ba)
 - **Capital Budget Data**: The capital budget for the City of Boston, specifying the funding sources, project descriptions, and budget allocations for acquiring or improving physical assets owned by the city.
     - [CAPITAL BUDGET](https://data.boston.gov/dataset/capital-budget/resource/c62d666e-27ea-4c03-9cb1-d3a81a1fb641)
+- **Supplementary Socioeconomic Data**: Social Vulnerability Index and census data for Boston neighborhoods to explore correlations with budget allocations.
 
 ## Modeling Approach
 - **Data Cleaning**: Address missing values and standardize datasets from different sources.
