@@ -1,9 +1,11 @@
 # Boston Budget Analysis Project
 
+[Youtube Link](https://youtu.be/fBA2DA9J3i8)
+
 ---
 
 ## Project Overview
-This project aims to analyze the City of Boston’s annual budget to understand trends in spending and how they have evolved over time. The primary focus will be on the operating and capital budgets, with additional inisghts into spending per capita and per specific sectors such as education and public safety. The goal is to provide actionable insights that can help the City of Boston improve budget allocation and optimize spending.
+This project aims to analyze the City of Boston’s annual budget to understand trends in spending and how they have evolved over time. The primary focus will be on the operating and capital budgets, with additional insights into spending per capita and per specific sectors such as education and public safety. The goal is to provide actionable insights that can help the City of Boston improve budget allocation and optimize spending.
 
 ## Project Goals
 The main objectives are:
