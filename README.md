@@ -124,6 +124,10 @@ Our predictive modeling approach uses an ensemble method combining two powerful 
      - Maximum depth of 6 to prevent overfitting
    - Purpose: Improves predictions through iterative error correction
 
+### Justification for Algorithm Selection:
+- **Random Forest:** We chose Random Forest due to its ability to handle high-dimensional data and capture complex, non-linear relationships. Its ensemble nature reduces the risk of overfitting, making it suitable for analyzing diverse budget patterns with potentially noisy data.
+- **Gradient Boosting:** Gradient Boosting complements Random Forest by iteratively correcting errors from previous models, leading to higher accuracy. Its ability to handle smaller datasets and emphasize challenging cases makes it ideal for nuanced patterns in budget allocation trends
+
 ### Model Tuning
 1. **Data Preprocessing**
    - Robust scaling of features to handle outliers
