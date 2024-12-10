@@ -20,7 +20,7 @@ The main objectives are:
 
 ### Data Collection
 
-We will use publicly available datasets, including:
+I will use publicly available datasets, including:
 - **Operating Budget Data**: The detailed breakdown of the operating budget for the City of Boston. It should provide information on the budget allocations for different departments, services, and personnel expenses such as teachers, police officers, and firefighters.
     - [OPERATING BUDGET](https://data.boston.gov/dataset/operating-budget/resource/8f2971f0-7a0d-401d-8376-0289e3b810ba)
 - **Capital Budget Data**: The capital budget for the City of Boston, specifying the funding sources, project descriptions, and budget allocations for acquiring or improving physical assets owned by the city.
@@ -36,7 +36,7 @@ The initial data require extensive cleaning to ensure consistency and usability:
 
 ### Feature Extraction 
 
-To better analyze budget allocations, we extracted key features from the data:
+To better analyze budget allocations, I extracted key features from the data:
 - **Per Capital Spending:** Represents per capita spending for each year, to see how much the city spends per resident by department.
 - **Department-Specific Allocations:** Analyzes how much each department receives within total budget, both as an absolute amount and as a percentage of the total budget.
 - **Program-Level Expenditures:** Analyzes spending at the program level, which can provide insights into how much is allocated to specific initiatives or services within each department.
@@ -49,8 +49,8 @@ To better analyze budget allocations, we extracted key features from the data:
 
 ### Clustering
 
-To categorize programs and departments based on budget allocations, we used **clustering analysis:**
-- **Approach:** We applied clustering on FY24 and FY25 budget data to group programs with similar budget characteristics. This grouping allows us to understand  which programs are high, medium, or low priority in terms of budget allocations.
+To categorize programs and departments based on budget allocations, I used **clustering analysis:**
+- **Approach:** I applied clustering on FY24 and FY25 budget data to group programs with similar budget characteristics. This grouping allows us to understand  which programs are high, medium, or low priority in terms of budget allocations.
 -**Insights:** Programs were grouped into 3 clusters: high-budget, medium-budget, and low-budget groups, reflecting Boston's allocation priorities.
 
 ---
@@ -125,7 +125,7 @@ Our predictive modeling approach uses an ensemble method combining two powerful 
    - Purpose: Improves predictions through iterative error correction
 
 ### Justification for Algorithm Selection:
-- **Random Forest:** We chose Random Forest due to its ability to handle high-dimensional data and capture complex, non-linear relationships. Its ensemble nature reduces the risk of overfitting, making it suitable for analyzing diverse budget patterns with potentially noisy data.
+- **Random Forest:** I chose Random Forest due to its ability to handle high-dimensional data and capture complex, non-linear relationships. Its ensemble nature reduces the risk of overfitting, making it suitable for analyzing diverse budget patterns with potentially noisy data.
 - **Gradient Boosting:** Gradient Boosting complements Random Forest by iteratively correcting errors from previous models, leading to higher accuracy. Its ability to handle smaller datasets and emphasize challenging cases makes it ideal for nuanced patterns in budget allocation trends
 
 ### Model Tuning
