@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Boston Budget Analysis Dashboard</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold mb-8">Boston Budget Analysis Dashboard</h1>
+        
+        <!-- Top 10 Departments -->
+        <div class="bg-white rounded-lg shadow p-6 mb-8">
+            <h2 class="text-xl font-semibold mb-4">Top 10 Departments by FY25 Budget</h2>
+            <div id="topDepartmentsChart" style="height: 500px;"></div>
+        </div>
+
+        <!-- Budget Growth Trends -->
+        <div class="bg-white rounded-lg shadow p-6 mb-8">
+            <h2 class="text-xl font-semibold mb-4">Budget Growth Trends</h2>
+            <div id="growthTrendsChart" style="height: 400px;"></div>
+        </div>
+
+        <!-- Per Capita Spending -->
+        <div class="bg-white rounded-lg shadow p-6 mb-8">
+            <h2 class="text-xl font-semibold mb-4">Per Capita Spending by Department</h2>
+            <div id="perCapitaChart" style="height: 500px;"></div>
+        </div>
+
+        <!-- Program Expenditures -->
+        <div class="bg-white rounded-lg shadow p-6 mb-8">
+            <h2 class="text-xl font-semibold mb-4">Program-Level Expenditures</h2>
+            <div id="programExpendituresChart" style="height: 500px;"></div>
+        </div>
+
+        <!-- Budget Share -->
+        <div class="bg-white rounded-lg shadow p-6 mb-8">
+            <h2 class="text-xl font-semibold mb-4">Department Budget Share</h2>
+            <div id="budgetShareChart" style="height: 500px;"></div>
+        </div>
+
+        <!-- Program Clusters -->
+        <div class="bg-white rounded-lg shadow p-6 mb-8">
+            <h2 class="text-xl font-semibold mb-4">Program Budget Clusters</h2>
+            <div id="programClustersChart" style="height: 500px;"></div>
+        </div>
+
+        <!-- Model Performance -->
+        <div class="bg-white rounded-lg shadow p-6 mb-8">
+            <h2 class="text-xl font-semibold mb-4">Model Performance Metrics</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6" id="metrics"></div>
+            
+            <!-- Feature Importance -->
+            <div class="mb-6">
+                <h3 class="text-lg font-semibold mb-3">Top 5 Important Features</h3>
+                <div id="featureImportanceChart" style="height: 300px;"></div>
+            </div>
+
+            <!-- Actual vs Predicted -->
+            <div class="mb-6">
+                <h3 class="text-lg font-semibold mb-3">Actual vs Predicted Budget Values</h3>
+                <div id="predictionChart" class="w-full h-[500px]"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            // Load Top Departments Chart
+            $.get('/api/top-departments', function(data) {
+                var trace = {
+                    y: data.departments,
+                    x: data.budgets,
+                    type: 'bar',
+                    orientation: 'h'
+                };
+
+                var layout = {
+                    margin: { l: 200, r: 50, t: 30, b: 50 },
+                    xaxis: { title: 'Budget ($)' }
+                };
+
+                Plotly.newPlot('topDepartmentsChart', [trace], layout);
+            });
+
+            // Load Budget Growth Trends
+            $.get('/api/budget-growth', function(data) {
+                var trace = {
+                    x: data.years,
+                    y: data.budgets,
+                    type: 'scatter',
+                    mode: 'lines+markers'
+                };
+
+                var layout = {
+                    margin: { l: 50, r: 50, t: 30, b: 50 },
+                    yaxis: { title: 'Budget ($)' }
+                };
+
+                Plotly.newPlot('growthTrendsChart', [trace], layout);
+            });
+
+            // Load Per Capita Spending
+            $.get('/api/per-capita-spending', function(data) {
+                var trace = {
+                    y: data.departments,
+                    x: data.spending,
+                    type: 'bar',
+                    orientation: 'h'
+                };
+
+                var layout = {
+                    margin: { l: 200, r: 50, t: 30, b: 50 },
+                    xaxis: { title: 'Per Capita Spending ($)' }
+                };
+
+                Plotly.newPlot('perCapitaChart', [trace], layout);
+            });
+
+            // Load Program Expenditures
+            $.get('/api/program-expenditures', function(data) {
+                var trace = {
+                    x: data.programs,
+                    y: data.budgets,
+                    type: 'bar'
+                };
+
+                var layout = {
+                    margin: { l: 50, r: 50, t: 30, b: 100 },
+                    xaxis: { tickangle: -45 },
+                    yaxis: { title: 'Budget ($)' }
+                };
+
+                Plotly.newPlot('programExpendituresChart', [trace], layout);
+            });
+
+            // Load Budget Share Pie Chart
+            $.get('/api/budget-share', function(data) {
+                var trace = {
+                    labels: data.departments,
+                    values: data.shares,
+                    type: 'pie'
+                };
+
+                var layout = {
+                    margin: { l: 50, r: 50, t: 30, b: 50 }
+                };
+
+                Plotly.newPlot('budgetShareChart', [trace], layout);
+            });
+
+            // Load Program Clusters
+            $.get('/api/program-clusters', function(data) {
+                var traces = [];
+                for(var i = 0; i < 3; i++) {
+                    var cluster_x = [];
+                    var cluster_y = [];
+                    var cluster_text = [];
+                    
+                    for(var j = 0; j < data.clusters.length; j++) {
+                        if(data.clusters[j] === i) {
+                            cluster_x.push(data.x[j]);
+                            cluster_y.push(data.y[j]);
+                            cluster_text.push(data.programs[j]);
+                        }
+                    }
+                    
+                    traces.push({
+                        x: cluster_x,
+                        y: cluster_y,
+                        text: cluster_text,
+                        mode: 'markers',
+                        type: 'scatter',
+                        name: 'Cluster ' + (i + 1)
+                    });
+                }
+
+                var layout = {
+                    margin: { l: 50, r: 50, t: 30, b: 50 },
+                    xaxis: { title: 'FY24 Appropriation ($)' },
+                    yaxis: { title: 'FY23 Actual Expense ($)' }
+                };
+
+                Plotly.newPlot('programClustersChart', traces, layout);
+            });
+
+            // Load Model Performance
+            $.get('/api/model-performance', function(data) {
+                // Display metrics
+                $('#metrics').html(`
+                    <div class="p-4 bg-blue-50 rounded">
+                        <p class="text-sm text-gray-600">RMSE</p>
+                        <p class="text-lg font-bold">$${data.metrics.rmse.toLocaleString()}</p>
+                    </div>
+                    <div class="p-4 bg-green-50 rounded">
+                        <p class="text-sm text-gray-600">R² Score</p>
+                        <p class="text-lg font-bold">${data.metrics.r2.toFixed(3)}</p>
+                    </div>
+                    <div class="p-4 bg-yellow-50 rounded">
+                        <p class="text-sm text-gray-600">CV Score</p>
+                        <p class="text-lg font-bold">${data.metrics.cv_score.toFixed(3)}</p>
+                    </div>
+                    <div class="p-4 bg-purple-50 rounded">
+                        <p class="text-sm text-gray-600">CV Std</p>
+                        <p class="text-lg font-bold">${data.metrics.cv_std.toFixed(3)}</p>
+                    </div>
+                `);
+
+                // Feature importance chart
+                var importance = Object.entries(data.feature_importance)
+                    .sort((a, b) => b[1] - a[1])
+                    .slice(0, 5);
+                
+                var trace = {
+                    y: importance.map(x => x[0]),
+                    x: importance.map(x => x[1]),
+                    type: 'bar',
+                    orientation: 'h'
+                };
+
+                var layout = {
+                    margin: { l: 200, r: 50, t: 30, b: 50 }
+                };
+
+                Plotly.newPlot('featureImportanceChart', [trace], layout);
+            });
+
+            // Load Prediction Analysis
+            // Update the prediction chart section
+            $.get('/api/prediction-analysis', function(data) {
+                var trace1 = {
+                    x: data.actual,
+                    y: data.predicted,
+                    mode: 'markers',
+                    type: 'scatter',
+                    marker: {
+                        size: 8,
+                        color: '#7E57C2',  // Purple color to match your image
+                        opacity: 0.7
+                    },
+                    name: 'Predictions'
+                };
+
+                var min_val = Math.min(...data.actual, ...data.predicted);
+                var max_val = Math.max(...data.actual, ...data.predicted);
+
+                var trace2 = {
+                    x: [min_val, max_val],
+                    y: [min_val, max_val],
+                    mode: 'lines',
+                    type: 'scatter',
+                    line: {
+                        color: 'red',
+                        dash: 'dash',
+                        width: 1.5
+                    },
+                    name: 'Perfect Prediction'
+                };
+
+                var layout = {
+                    title: {
+                        text: 'Actual vs Predicted Budget Values',
+                        y: 0.95
+                    },
+                    width: null,  // Make it responsive
+                    height: 500,
+                    paper_bgcolor: 'white',
+                    plot_bgcolor: 'white',
+                    xaxis: {
+                        title: 'Actual Budget ($)',
+                        tickformat: '$,.0f',
+                        gridcolor: '#E5E5E5',
+                        showgrid: true,
+                        range: [0, max_val * 1.05],
+                        tickfont: { size: 10 }
+                    },
+                    yaxis: {
+                        title: 'Predicted Budget ($)',
+                        tickformat: '$,.0f',
+                        gridcolor: '#E5E5E5',
+                        showgrid: true,
+                        range: [0, max_val * 1.05],
+                        tickfont: { size: 10 }
+                    },
+                    margin: {
+                        l: 100,
+                        r: 50,
+                        t: 50,
+                        b: 80
+                    },
+                    showlegend: true,
+                    legend: {
+                        x: 1,
+                        y: 1,
+                        xanchor: 'right'
+                    }
+                };
+
+                var config = {
+                    responsive: true,
+                    displayModeBar: false
+                };
+
+                Plotly.newPlot('predictionChart', [trace1, trace2], layout, config);
+
+                // Add resize event listener
+                window.addEventListener('resize', function() {
+                    Plotly.Plots.resize('predictionChart');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
