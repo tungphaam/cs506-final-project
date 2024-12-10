@@ -94,17 +94,27 @@ class BostonBudgetPredictor:
         gb_pred = self.gb_model.predict(X_test_scaled)
         ensemble_pred = 0.6 * rf_pred + 0.4 * gb_pred
         
-        # Get cross validation scores
-        cv_scores = cross_val_score(self.rf_model, X_train_scaled, y_train, cv=5)
+        # Handle R² score calculation for small datasets
+        # R² is undefined when there are fewer than two samples in the test set.
+        if len(y_test) < 2:
+            r2 = np.nan  # Assign nan for undefined R²
+        else:
+            r2 = r2_score(y_test, ensemble_pred)
+
+        
+        # Get cross-validation scores
+        n_splits = min(5, len(X_train))
+        cv_scores = cross_val_score(self.rf_model, X_train_scaled, y_train, cv=n_splits)
         
         return {
             'rmse': np.sqrt(mean_squared_error(y_test, ensemble_pred)),
-            'r2': r2_score(y_test, ensemble_pred),
+            'r2': r2,
             'cv_scores_mean': cv_scores.mean(),
             'cv_scores_std': cv_scores.std(),
             'y_test': y_test,
             'predictions': ensemble_pred
         }
+
 
 def main():
     operating_df = pd.read_csv("data/raw/operating_budget.csv")
