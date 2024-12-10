@@ -193,23 +193,42 @@ The high R² score and reasonable RMSE indicate that the model can be a valuable
 
 ---
 
-## 5. Next Steps
+## 6. Future Work
 
-1. **Further Modeling**:
-   - Implement predictive models to forecast future budget needs based on historical trends.
-   - Use clustering to further explore department and program relationships based on spending.
+1. **Enhanced Feature Engineering for Capital Budget Integration**:
+   - Develop more sophisticated metrics to combine operating and capital budgets:
+      - Design new ratios to measure the relationship between operational spending and capital project outcomes
+      - Build time-series features that capture the long-term impact of capital investments on operational costs
+   - Create neighborhood-specific impact scores for capital investments
 
-2. **Model Testing and Validation**:
-   - Split the data into training and testing sets (80/20) and apply k-fold cross-validation to validate model accuracy.
-   - Evaluate model performance with metrics like MAE, RMSE, and R² for regression analysis.
+2. **Geographic Analysis of Budget Distribution**:
+   - Map budget allocations across Boston's neighborhoods to identify potential spending disparities
+   - Create interactive visualizations showing:
+      - Per Capita spending by neighborhood
+      - Distribution of capital projects across different areas
+      - Infrastructure investment patterns
+   - Analyze the relationship between neighborhood characteristics and budget allocation
 
-3. **Additional Visualizations**:
-   - Expand visualizations to include heatmaps for geographic budget distribution and scatter plots for correlation with socioeconomic factors.
-   - Add comparative charts to analyze differences between projected and actual spending.
+3. **Socioeconomic Factor Correlation Analysis**:
+   - Integrate demographic data to understand spending patterns:
+      - Population density impact on service delivery costs
+      - Income level correlations with public service needs
+      - Age distribution effects on program requirements
+   - Study the relationship between:
+      - Educational outcomes and school budget allocation
+      - Crime rates and public safety spending
+      - Public health metrics and healthcare investments
+   - Analyze how social vulnerability indices correlate with budget priorities
 
-4. **Final Report and Presentation**:
-   - Complete the final report summarizing all findings, visualizations, and modeling insights.
-   - Prepare a presentation for stakeholders with actionable recommendations based on the analysis.
+4. **Enhanced Machine Learning Applications**:
+   - Implement more sophisticated models:
+      - Deep learning for complex pattern recognition
+      - Neural networks for multi-variable prediction
+      - Time series models for trend analysis
+   - Develop automated anomaly detection systems for:
+      - Unusual spending patterns
+      - Budget inefficiencies
+      - Potential cost savings opportunities
 
 ## Timeline
 - **October 1**: Proposal submission
