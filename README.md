@@ -103,6 +103,96 @@ To categorize programs and departments based on budget allocations, we used **cl
 
 ---
 
+## 5. Predictive Modeling
+
+### Approach and Implementation
+Our predictive modeling approach uses an ensemble method combining two powerful algorithms:
+
+1. **Random Forest Regressor**
+   - Configuration:
+     - 200 decision trees
+     - Maximum depth of 10 levels
+     - Minimum 5 samples for node splitting
+     - Minimum 2 samples per leaf
+     - Optimized for balanced accuracy and complexity
+   - Purpose: Captures complex non-linear relationships in budget allocations
+
+2. **Gradient Boosting Regressor**
+   - Configuration:
+     - 200 sequential trees
+     - Learning rate of 0.05 for gradual improvements
+     - Maximum depth of 6 to prevent overfitting
+   - Purpose: Improves predictions through iterative error correction
+
+### Model Tuning
+1. **Data Preprocessing**
+   - Robust scaling of features to handle outliers
+   - Removal of outliers using IQR method
+   - Feature engineering including:
+     - Growth rate calculations
+     - Department-level aggregations
+     - Capital budget integrations
+
+2. **Ensemble Weighting**
+   - Random Forest: 60% contribution
+   - Gradient Boosting: 40% contribution
+   - Weights determined through cross-validation performance
+
+### Model Performance Analysis
+
+1. **Key Metrics**
+   - RMSE: $270,729.96 (average prediction error)
+   - R² Score: 0.933 (93.3% variance explained)
+   - Cross-validation Score: 0.720 (±0.169)
+
+2. **Feature Importance**
+   The model identified five key predictive features:
+   ```
+   Feature                    Importance
+   FY23 Actual Expense_sum    0.722303
+   Expense Category_count     0.179095
+   FY24 Appropriation_mean    0.064829
+   FY23 Actual Expense_mean   0.016086
+   Authorization_FY           0.009849
+   ```
+
+   Analysis of feature importance reveals:
+   - Historical spending (FY23 Actual Expense) is the strongest predictor at 72.2%
+   - Department complexity (Expense Categories) accounts for 17.9%
+   - Current appropriations contribute 6.5%
+   - Mean expenses and fiscal year authorizations have minor influences
+
+3. **Visualization Analysis**
+   - Feature Importance Plot shows clear hierarchy of predictive factors
+   - Actual vs Predicted Plot demonstrates:
+     - Strong alignment along the perfect prediction line
+     - Higher variance in predictions for larger budgets
+     - Consistent accuracy across most budget ranges
+
+### Model Strengths and Limitations
+
+1. **Strengths**
+   - High predictive accuracy (93.3% R² score)
+   - Robust cross-validation performance
+   - Clear feature importance interpretability
+   - Good handling of department-level variations
+
+2. **Limitations**
+   - Increased uncertainty for larger budget predictions
+   - Moderate cross-validation standard deviation (±0.169)
+   - Limited utilization of capital budget features
+   - Potential for overfitting in specific department categories
+
+### Implementation Results
+The model demonstrates strong capability in predicting departmental budgets, with particularly good performance in:
+- Mid-range budget predictions
+- Department-level allocations
+- Year-over-year growth patterns
+
+The high R² score and reasonable RMSE indicate that the model can be a valuable tool for budget planning and analysis, though careful consideration should be given to predictions for extremely large budgets where uncertainty increases.
+
+---
+
 ## 5. Next Steps
 
 1. **Further Modeling**:
