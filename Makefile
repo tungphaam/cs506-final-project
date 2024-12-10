@@ -1,27 +1,29 @@
-.PHONY: all clean install test run
+# Define variables
+VENV = venv
+PYTHON = python3
+FLASK_APP = app.py
+PIP = $(VENV)/bin/pip
+FLASK = $(VENV)/bin/flask
 
-# Default target
-all: install test run
+.PHONY: install run clean reinstall
 
-# Install dependencies
+# Create virtual environment and install dependencies
 install:
-	python -m pip install --upgrade pip
-	pip install -r requirements.txt
+	$(PYTHON) -m venv $(VENV)
+	$(PIP) install --upgrade pip
+	$(PIP) install -r requirements.txt
 
-# Run tests
-test:
-	python -m pytest tests/
-
-# Run the model
+# Run the Flask application
 run:
-	python boston_budget.py
+	@if [ ! -d "$(VENV)" ]; then \
+		echo "Virtual environment not found. Running install first..."; \
+		make install; \
+	fi
+	FLASK_APP=$(FLASK_APP) FLASK_ENV=development $(FLASK) run --port 3000
 
-# Clean up generated files
+# Clean up virtual environment
 clean:
-	find . -type d -name "__pycache__" -exec rm -rf {} +
-	find . -type f -name "*.pyc" -delete
-	find . -type f -name "*.pyo" -delete
-	find . -type f -name "*.pyd" -delete
-	find . -type d -name "*.egg-info" -exec rm -rf {} +
-	find . -type f -name ".coverage" -delete
-	find . -type d -name ".pytest_cache" -exec rm -rf {} +
+	rm -rf $(VENV)
+
+# Reinstall all dependencies
+reinstall: clean install

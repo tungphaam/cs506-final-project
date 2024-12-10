@@ -85,20 +85,25 @@ class BostonBudgetPredictor:
         X_train_scaled = self.scaler.fit_transform(X_train)
         X_test_scaled = self.scaler.transform(X_test)
         
-        cv_scores = cross_val_score(self.rf_model, X_train_scaled, y_train, cv=5)
-        
+        # Train models
         self.rf_model.fit(X_train_scaled, y_train)
         self.gb_model.fit(X_train_scaled, y_train)
         
+        # Get predictions
         rf_pred = self.rf_model.predict(X_test_scaled)
         gb_pred = self.gb_model.predict(X_test_scaled)
         ensemble_pred = 0.6 * rf_pred + 0.4 * gb_pred
+        
+        # Get cross validation scores
+        cv_scores = cross_val_score(self.rf_model, X_train_scaled, y_train, cv=5)
         
         return {
             'rmse': np.sqrt(mean_squared_error(y_test, ensemble_pred)),
             'r2': r2_score(y_test, ensemble_pred),
             'cv_scores_mean': cv_scores.mean(),
-            'cv_scores_std': cv_scores.std()
+            'cv_scores_std': cv_scores.std(),
+            'y_test': y_test,
+            'predictions': ensemble_pred
         }
 
 def main():
