@@ -1,7 +1,9 @@
 # Boston Budget Analysis Project
 
 [Youtube Link for Midterm Report](https://youtu.be/fBA2DA9J3i8)
+
 [Youtube Link for Final Report](https://youtu.be/BKejuxTpVbw)
+
 ---
 
 ## Project Overview
