@@ -62,25 +62,42 @@ To categorize programs and departments based on budget allocations, I used **clu
 - **Description**: This bar chart shows the FY25 budget allocations across the top 10 departments.
 - **Insight**: Boston Public Schools have the largest allocation, emphasizing the city’s focus on education. Other high-budget departments include the Police Department and Pensions, which reflect Boston’s investment in public safety and employee benefits.
 
+![](visuals/output.png)
+
 ### Visualization 2: Budget Growth Over Fiscal Years
 
 - **Description**: A line chart showing budget growth from FY22 to FY25.
 - **Insight**: There’s a steady increase in the budget over time, with a notable jump in FY25. This may indicate planned expansions in services or increased revenues, signaling Boston’s commitment to meeting growing city needs.
+
+![](visuals/output2.png)
 
 ### Visualization 3: Per Capita Spending by Department (FY25)
 
 - **Description**: A horizontal bar chart displaying per capita spending across the top 10 departments.
 - **Insight**: Boston Public Schools receive the highest per capita spending, indicating a focus on providing substantial resources per resident for education. The Police Department and Pensions follow, highlighting priorities in safety and long-term commitments to employee welfare.
 
+![](visuals/output3.png)
+
 ### Visualization 4: Top Programs by FY25 Budget
 
 - **Description**: A bar chart of the top 10 programs by FY25 budget.
 - **Insight**: The highest-funded programs include Pensions, BPS Operations, and Charter School Tuition, reflecting commitments to employee benefits and a substantial investment in both public and charter schools.
 
-### Visualization 5: Clustering of Programs Based on Budget Allocations
+![](visuals/output4.png)
+
+### Visualization 5: FY25 Budget Share by Department
+
+- **Description**: A pie chart showing the percentage share of the FY25 budget allocation across various departments.
+- **Insight**: Boston Public Schools represent the largest share of the FY25 budget at 32.9%, reflecting a significant focus on education. Other notable allocations include Police Department (10.2%) and Pensions (9.1%), emphasizing public safety and retirement benefits. The "Other" category accounts for 16.3% of the budget, representing smaller departments and miscellaneous expenses.
+
+![](visuals/output5.png)
+
+### Visualization 6: Clustering of Programs Based on Budget Allocations
 
 - **Description**: Scatter plot showing clusters of programs based on FY24 and FY25 budget allocations.
 - **Insight**: The clustering reveals three distinct groups (high, medium, and low budget allocations). High-budget programs are likely essential city priorities, while lower-budget programs may represent administrative functions or smaller initiatives.
+
+![](visuals/output6.png)
 
 ---
 
